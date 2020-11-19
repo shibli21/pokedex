@@ -1,4 +1,11 @@
-import { Container, Heading, Wrap, WrapItem } from "@chakra-ui/react";
+import {
+  Center,
+  Container,
+  Heading,
+  SimpleGrid,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react";
 import React from "react";
 import { useQuery } from "react-query";
 import { Main } from "../components/Main";
@@ -23,13 +30,16 @@ export default function Home() {
     <Container maxW="xl">
       <Main>
         <Heading>Pokédex</Heading>
-        <Wrap spacing="30px" justify="center">
+        <SimpleGrid
+          columns={[1, 1, 1, 2]}
+          spacingX="40px"
+          spacingY="40px"
+          alignSelf="center"
+        >
           {data.results.map((pokemon, i) => (
-            <WrapItem key={i}>
-              <PokemonCard data={pokemon} />
-            </WrapItem>
+            <PokemonCard data={pokemon} />
           ))}
-        </Wrap>
+        </SimpleGrid>
       </Main>
     </Container>
   );

@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { HTTP_METHODS } from "../../types/global";
 
-const axios = Axios.create({
+export const axios = Axios.create({
   baseURL: "https://pokeapi.co/api/v2",
 });
 
@@ -27,4 +27,4 @@ export const createApiRequest = async (
   }
 };
 
-export default axios;
+export const BaseImageUrl = "https://pokeres.bastionbot.org/images/pokemon";
