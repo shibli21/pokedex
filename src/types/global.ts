@@ -176,3 +176,66 @@ export interface Type {
   slot: number;
   type: Species;
 }
+
+export interface PokemonSpecies {
+  base_happiness?: number;
+  capture_rate?: number;
+  color?: Color;
+  egg_groups?: any[];
+  evolution_chain?: Color;
+  evolves_from_species?: Color;
+  flavor_text_entries?: any[];
+  form_descriptions?: any[];
+  forms_switchable?: boolean;
+  gender_rate?: number;
+  genera?: Genus[];
+  generation?: Generation;
+  growth_rate?: Generation;
+  habitat?: Generation;
+  has_gender_differences?: boolean;
+  hatch_counter?: number;
+  id?: number;
+  is_baby?: boolean;
+  is_legendary?: boolean;
+  is_mythical?: boolean;
+  name?: string;
+  names?: Name[];
+  order?: number;
+  pal_park_encounters?: PalParkEncounter[];
+  pokedex_numbers?: PokedexNumber[];
+  shape?: Generation;
+  varieties?: Variety[];
+}
+
+export interface Color {}
+
+export interface Genus {
+  genus?: string;
+  language?: Generation;
+}
+
+export interface Generation {
+  name?: string;
+  url?: string;
+}
+
+export interface Name {
+  language?: Generation;
+  name?: string;
+}
+
+export interface PalParkEncounter {
+  area?: Generation;
+  base_score?: number;
+  rate?: number;
+}
+
+export interface PokedexNumber {
+  entry_number?: number;
+  pokedex?: Generation;
+}
+
+export interface Variety {
+  is_default?: boolean;
+  pokemon?: Generation;
+}
