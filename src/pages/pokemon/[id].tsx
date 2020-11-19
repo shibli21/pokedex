@@ -19,6 +19,7 @@ import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useQuery } from "react-query";
 import { Main } from "../../components/Main";
+import PokeballLoader from "../../components/PokeballLoader";
 import PokemonTypeBadge from "../../components/PokemonTypeBadge";
 import ProgressBar from "../../components/ProgressBar";
 import BoldText from "../../components/TextStyle/BoldText";
@@ -38,7 +39,7 @@ const Pokemon = () => {
     PokemonSpecies
   >(["pokemonSpecies", router.query.id], fetchSinglePokemonSpecies);
 
-  if (isLoading || isLoadingPokeSpecies) return <Box>Loading</Box>;
+  if (isLoading || isLoadingPokeSpecies) return <PokeballLoader />;
 
   return (
     <Container maxW="xl">
