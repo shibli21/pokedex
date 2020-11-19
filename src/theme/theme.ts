@@ -3,52 +3,52 @@ import { extendTheme } from "@chakra-ui/react";
 const theme = extendTheme({
   colors: {
     normal: {
-      light: "#CDCDB9",
-      medium: "#C4C4A4",
+      light: "#b3b5b2",
+      medium: "#a0a29f",
     },
     fire: {
       light: "#F4934D",
       medium: "#F08030",
     },
     fighting: {
-      light: "#BA5852",
-      medium: "#C03028",
+      light: "#EB4971",
+      medium: "#d3425f",
     },
     water: {
-      light: "#85A5F0",
-      medium: "#6890F0",
+      light: "#75b1e5",
+      medium: "#539ddf",
     },
     flying: {
       light: "#B8A5F2",
       medium: "#A890F0",
     },
     grass: {
-      light: "#99D07D",
-      medium: "#78C850",
+      light: "#7fca79",
+      medium: "#5fbd58",
     },
     poison: {
-      light: "#A768A7",
-      medium: "#A040A0",
+      light: "#c582d9",
+      medium: "#b763cf",
     },
     electric: {
       light: "#F9DF78",
       medium: "#F8D030",
     },
     ground: {
-      light: "#EDD081",
-      medium: "#E0C068",
+      light: "#F78551",
+      medium: "#DE7748",
     },
     psychic: {
-      light: "#F47DA1",
-      medium: "#F85888",
+      light: "#fb9d9a",
+      medium: "#fa8581",
     },
     rock: {
-      light: "#C5B059",
-      medium: "#B8A038",
+      light: "#d4c9a1",
+      medium: "#c9bb8a",
     },
     ice: {
-      light: "#B3E1E1",
-      medium: "#98D8D8",
+      light: "#91d9cd",
+      medium: "#75d0c1",
     },
     bug: {
       light: "#B5C534",
@@ -59,20 +59,20 @@ const theme = extendTheme({
       medium: "#7038F8",
     },
     ghost: {
-      light: "#7D6B9B",
-      medium: "#705898",
+      light: "#7f8ac9",
+      medium: "#5f6dbc",
     },
     dark: {
-      light: "#756459",
-      medium: "#705848",
+      light: "#7a7981",
+      medium: "#595761",
     },
     steel: {
-      light: "#C1C1D1",
-      medium: "#B8B8D0",
+      light: "#78aab5",
+      medium: "#5695a3",
     },
     fairy: {
-      light: "#EFA7B7",
-      medium: "#EE99AC",
+      light: "#f1a6eb",
+      medium: "#ee90e6",
     },
   },
   styles: {
