@@ -5,20 +5,13 @@ import { useQuery } from "react-query";
 import { Main } from "../components/Main";
 import PokemonCard from "../components/PokemonCard";
 import { Pokemon } from "../types/global";
-
-const fetchPokemon = async () => {
-  const { data } = await axios.get<Pokemon>(
-    "https://pokeapi.co/api/v2/pokemon?limit=50"
-  );
-  return data;
-};
+import { fetchPokemon } from "./api/apiCalls";
 
 export default function Home() {
-  const { isLoading, error, data, isError } = useQuery(
+  const { isLoading, error, data, isError } = useQuery<Pokemon>(
     "pokemons",
     fetchPokemon
   );
-  console.log("Home -> data", data);
 
   if (isLoading) return <Box>Loading</Box>;
 
