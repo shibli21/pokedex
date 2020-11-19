@@ -1,5 +1,4 @@
-import { Box, Container, Heading, Wrap, WrapItem } from "@chakra-ui/react";
-import axios from "axios";
+import { Container, Heading, Wrap, WrapItem } from "@chakra-ui/react";
 import React from "react";
 import { useQuery } from "react-query";
 import { Main } from "../components/Main";

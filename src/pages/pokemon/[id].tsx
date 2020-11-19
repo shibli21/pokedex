@@ -13,6 +13,7 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import React from "react";
@@ -30,6 +31,7 @@ import { fetchSinglePokemon, fetchSinglePokemonSpecies } from "../api/apiCalls";
 
 const Pokemon = () => {
   const router = useRouter();
+
   const { isLoading, data } = useQuery<SinglePokemon>(
     ["pokemon", router.query.id],
     fetchSinglePokemon
@@ -39,7 +41,9 @@ const Pokemon = () => {
     PokemonSpecies
   >(["pokemonSpecies", router.query.id], fetchSinglePokemonSpecies);
 
-  if (isLoading || isLoadingPokeSpecies) return <PokeballLoader />;
+  if (isLoading || isLoadingPokeSpecies) {
+    return <PokeballLoader />;
+  }
 
   return (
     <Container maxW="xl">
