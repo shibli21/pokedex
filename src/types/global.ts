@@ -6,7 +6,8 @@ export enum HTTP_METHODS {
   PATCH = "PATCH",
 }
 
-export interface Pokemon {
+export interface Pokemons {
+  cursor?: string;
   count?: number;
   next?: string;
   previous?: null;

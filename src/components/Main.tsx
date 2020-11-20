@@ -9,6 +9,9 @@ export const Main = (props: StackProps) => (
       ":first-of-type": {
         marginTop: "30px",
       },
+      ":last-of-type": {
+        marginBottom: "100px",
+      },
     }}
     {...props}
   />

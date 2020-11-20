@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import NextImage from "next/image";
-import React from "react";
+import React, { Fragment } from "react";
 import { useQuery } from "react-query";
 import { fetchSinglePokemon } from "../pages/api/apiCalls";
 import { PokemonResult, SinglePokemon } from "../types/global";
@@ -41,7 +41,7 @@ const PokemonCard = ({ data }: PokemonCard) => {
   }
 
   return (
-    <NextLink href={`/pokemon/${pokemonId}`}>
+    <NextLink href={`/pokemon/${pokemonId}`} scroll={false}>
       <Box
         p="5"
         borderRadius="15px"
@@ -68,10 +68,10 @@ const PokemonCard = ({ data }: PokemonCard) => {
               {data.name}
             </Text>
             <Flex>
-              {PokeData.types.map((type) => (
-                <>
+              {PokeData.types.map((type, i) => (
+                <Fragment key={i}>
                   <PokemonTypeBadge type={type.type.name} />
-                </>
+                </Fragment>
               ))}
             </Flex>
           </Box>

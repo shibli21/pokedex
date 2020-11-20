@@ -48,9 +48,7 @@ const Pokemon = () => {
   return (
     <Container maxW="xl">
       <Main>
-        <Link href="/">
-          <Box as={FaArrowLeft} cursor="pointer" />
-        </Link>
+        <Box as={FaArrowLeft} cursor="pointer" onClick={() => history.back()} />
         <Grid
           gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
           gap="40px"
