@@ -100,11 +100,12 @@ const PokemonTypeBadge = ({ type, noName }: Props) => {
 
   return (
     <Box
+      mt={2}
       display="inline-block"
       px={1}
       py={0.5}
       fontWeight="normal"
-      fontSize="1.2em"
+      fontSize={["15px", "20px", "20px"]}
       textTransform="capitalize"
       mr={2}
       bg={`${type}.medium`}
@@ -115,7 +116,7 @@ const PokemonTypeBadge = ({ type, noName }: Props) => {
       <HStack spacing={1}>
         <Box p={noName ? 1.5 : ""}>{icon}</Box>
         {noName ? null : (
-          <Text mr={1} fontSize={["sm", "sm", "lg"]}>
+          <Text mr={1} fontSize={["xs", "sm", "lg"]}>
             {type}
           </Text>
         )}

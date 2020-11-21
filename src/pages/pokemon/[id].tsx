@@ -2,8 +2,8 @@ import {
   Box,
   Center,
   Container,
+  Flex,
   Grid,
-  Image,
   ListItem,
   OrderedList,
   Tab,
@@ -13,10 +13,9 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import { useRouter } from "next/dist/client/router";
-import Link from "next/link";
-import React from "react";
+import NextImage from "next/image";
+import React, { Fragment } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useQuery } from "react-query";
 import { Main } from "../../components/Main";
@@ -28,6 +27,7 @@ import SecondaryText from "../../components/TextStyle/SecondaryText";
 import TitleText from "../../components/TextStyle/TitleText";
 import { PokemonSpecies, SinglePokemon } from "../../types/global";
 import { fetchSinglePokemon, fetchSinglePokemonSpecies } from "../api/apiCalls";
+import { BaseImageUrl } from "../api/axios";
 
 const Pokemon = () => {
   const router = useRouter();
@@ -51,14 +51,15 @@ const Pokemon = () => {
         <Box as={FaArrowLeft} cursor="pointer" onClick={() => history.back()} />
         <Grid
           gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
-          gap="40px"
+          gap={["10px", "10px", "40px"]}
           boxShadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
         >
-          <Box
+          <Grid
+            gridTemplateColumns={["1fr 1fr", "1fr 1fr", "1fr "]}
+            gridTemplateRows="repeat(auto-fill, minmax(150px, 1fr))"
             bg={`${data.types[0].type.name}.light`}
-            p={["0px", "0px", "30px"]}
-            h="80vh"
-            alignItems="center"
+            p={["20px", "30px", "30px"]}
+            h={["auto", "auto", "80vh"]}
           >
             <Box>
               <Text fontWeight="semibold" fontSize="xl" color="gray.700">
@@ -67,43 +68,49 @@ const Pokemon = () => {
               <Text
                 textTransform="capitalize"
                 fontWeight="bold"
-                fontSize="3xl"
                 color="white"
                 letterSpacing={1.3}
+                fontSize={["2xl", "3xl", "3xl", "3xl"]}
               >
                 {data.name}
               </Text>
-              {data.types.map((type) => (
-                <>
-                  <PokemonTypeBadge type={type.type.name} />
-                </>
-              ))}
+              <Flex>
+                {data.types.map((type) => (
+                  <Fragment key={type.type.name}>
+                    <PokemonTypeBadge type={type.type.name} />
+                  </Fragment>
+                ))}
+              </Flex>
             </Box>
-
-            <Center>
-              <Image
-                height="300px"
-                width="auto"
-                src={`https://pokeres.bastionbot.org/images/pokemon/${router.query.id}.png`}
-              />
-            </Center>
-          </Box>
-
+            <Box>
+              <Center>
+                <NextImage
+                  height="350px"
+                  width="350px"
+                  src={`${BaseImageUrl}/${router.query.id}.png`}
+                />
+              </Center>
+            </Box>
+          </Grid>
           <Box fontSize="xl" p={["0px", "0px", "30px"]}>
             <Tabs variant="soft">
               <TabList
                 color="gray.400"
                 justifyContent="space-between"
                 px={5}
-                mb={4}
+                // mb={2}
               >
                 <Tab _selected={{ color: "gray.900" }}> About</Tab>
                 <Tab _selected={{ color: "gray.900" }}>Stats</Tab>
                 <Tab _selected={{ color: "gray.900" }}>Evolution</Tab>
               </TabList>
-              <TabPanels bg="white" borderTopRadius={30} h="100%">
-                <TabPanel i>
-                  <Text textTransform="capitalize" fontSize="lg" mb={4}>
+              <TabPanels>
+                <TabPanel>
+                  <Text
+                    textTransform="capitalize"
+                    fontSize={["md", "md", "lg"]}
+                    mb={4}
+                  >
                     {pokeSpecies.flavor_text_entries[0].flavor_text.replace(
                       "\f",
                       " "
@@ -122,7 +129,7 @@ const Pokemon = () => {
                     <BoldText>Abilities</BoldText>
                     <OrderedList>
                       {data.abilities.map((ab) => (
-                        <SecondaryText>
+                        <SecondaryText key={ab.ability.name}>
                           <ListItem>{ab.ability.name}</ListItem>
                         </SecondaryText>
                       ))}
@@ -150,21 +157,25 @@ const Pokemon = () => {
                   </TitleText>
                   <Grid
                     alignItems="center"
-                    gridTemplateColumns="1fr 1fr 1fr  1fr 1fr"
+                    gridTemplateColumns="3fr 1fr 2fr  1fr 1fr"
                     columnGap="15px"
                   >
                     {data.stats.map((stat) => (
-                      <>
-                        <Text textTransform="capitalize">{stat.stat.name}</Text>
+                      <Fragment key={stat.stat.name}>
+                        <BoldText>{stat.stat.name}</BoldText>
                         <Text color="gray.500">{stat.base_stat}</Text>
                         <ProgressBar
                           bg={`${data.types[0].type.name}.medium`}
                           value={stat.base_stat}
                           max={300}
                         />
-                        <Text color="gray.500">{stat.base_stat}</Text>
-                        <Text color="gray.500">{stat.base_stat}</Text>
-                      </>
+                        <Text color="gray.500" justifySelf="flex-end">
+                          {stat.base_stat}
+                        </Text>
+                        <Text color="gray.500" justifySelf="flex-end">
+                          {stat.base_stat}
+                        </Text>
+                      </Fragment>
                     ))}
                   </Grid>
                 </TabPanel>
