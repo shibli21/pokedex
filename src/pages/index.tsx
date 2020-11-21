@@ -14,23 +14,26 @@ import { Pokemons } from "../types/global";
 import { fetchPokemon } from "./api/apiCalls";
 
 export default function Home() {
-  const { data, isFetching, fetchMore, isLoading } = useInfiniteQuery<Pokemons>(
-    "pokemons",
-    fetchPokemon,
-    {
-      getFetchMore: (lastGroup) => {
-        lastGroup.cursor = lastGroup.next?.split("&")[0].split("=")[1];
-        return lastGroup.cursor;
-      },
-    }
-  );
+  const {
+    data,
+    isFetchingMore,
+    fetchMore,
+    isLoading,
+  } = useInfiniteQuery<Pokemons>("pokemons", fetchPokemon, {
+    getFetchMore: (lastGroup) => {
+      lastGroup.cursor = lastGroup.next?.split("&")[0].split("=")[1];
+      return lastGroup.cursor;
+    },
+  });
 
   if (isLoading) return <PokeballLoader />;
 
   return (
     <Container maxW="xl">
       <Main>
-        <Heading>Pokédex</Heading>
+        <Heading textAlign="center" mb={8}>
+          Pokédex
+        </Heading>
         <SimpleGrid
           columns={[1, 1, 1, 2]}
           spacingX="40px"
@@ -50,7 +53,7 @@ export default function Home() {
         <Center>
           <Button
             onClick={() => fetchMore()}
-            isLoading={isFetching}
+            isLoading={isFetchingMore as boolean}
             colorScheme="blue"
           >
             Fetch more pokemons

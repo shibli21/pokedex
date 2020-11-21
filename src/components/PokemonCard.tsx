@@ -44,7 +44,6 @@ const PokemonCard = ({ data }: PokemonCard) => {
     <NextLink href={`/pokemon/${pokemonId}`} scroll={false}>
       <Box
         p="5"
-        borderRadius="15px"
         bg={`${PokeData?.types[0].type.name}.light`}
         boxShadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
         cursor="pointer"

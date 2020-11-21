@@ -16,3 +16,7 @@ export const fetchPokemon = async (key, offset = 0) => {
     {}
   );
 };
+
+export const fetchPokemonEvolutionChain = async (key, id: any) => {
+  return createApiRequest(`/evolution-chain/${id}`, HTTP_METHODS.GET, {});
+};

@@ -178,21 +178,83 @@ export interface Type {
   type: Species;
 }
 
+// export interface PokemonSpecies {
+//   base_happiness?: number;
+//   capture_rate?: number;
+//   color?: Color;
+//   egg_groups?: any[];
+//   evolution_chain?: Color;
+//   evolves_from_species?: Color;
+//   flavor_text_entries?: any[];
+//   form_descriptions?: any[];
+//   forms_switchable?: boolean;
+//   gender_rate?: number;
+//   genera?: Genus[];
+//   generation?: Generation;
+//   growth_rate?: Generation;
+//   habitat?: Generation;
+//   has_gender_differences?: boolean;
+//   hatch_counter?: number;
+//   id?: number;
+//   is_baby?: boolean;
+//   is_legendary?: boolean;
+//   is_mythical?: boolean;
+//   name?: string;
+//   names?: Name[];
+//   order?: number;
+//   pal_park_encounters?: PalParkEncounter[];
+//   pokedex_numbers?: PokedexNumber[];
+//   shape?: Generation;
+//   varieties?: Variety[];
+// }
+
+// export interface Color {}
+
+// export interface Genus {
+//   genus?: string;
+//   language?: Generation;
+// }
+
+// export interface Generation {
+//   name?: string;
+//   url?: string;
+// }
+
+// export interface Name {
+//   language?: Generation;
+//   name?: string;
+// }
+
+// export interface PalParkEncounter {
+//   area?: Generation;
+//   base_score?: number;
+//   rate?: number;
+// }
+
+// export interface PokedexNumber {
+//   entry_number?: number;
+//   pokedex?: Generation;
+// }
+
+// export interface Variety {
+//   is_default?: boolean;
+//   pokemon?: Generation;
+// }
 export interface PokemonSpecies {
   base_happiness?: number;
   capture_rate?: number;
   color?: Color;
   egg_groups?: any[];
-  evolution_chain?: Color;
-  evolves_from_species?: Color;
-  flavor_text_entries?: any[];
+  evolution_chain?: EvolutionChainClass;
+  evolves_from_species?: null;
+  flavor_text_entries?: FlavorTextEntry[];
   form_descriptions?: any[];
   forms_switchable?: boolean;
   gender_rate?: number;
   genera?: Genus[];
-  generation?: Generation;
-  growth_rate?: Generation;
-  habitat?: Generation;
+  generation?: Color;
+  growth_rate?: Color;
+  habitat?: Color;
   has_gender_differences?: boolean;
   hatch_counter?: number;
   id?: number;
@@ -204,39 +266,81 @@ export interface PokemonSpecies {
   order?: number;
   pal_park_encounters?: PalParkEncounter[];
   pokedex_numbers?: PokedexNumber[];
-  shape?: Generation;
+  shape?: Color;
   varieties?: Variety[];
 }
 
-export interface Color {}
-
-export interface Genus {
-  genus?: string;
-  language?: Generation;
-}
-
-export interface Generation {
+export interface Color {
   name?: string;
   url?: string;
 }
 
+export interface EvolutionChainClass {
+  url?: string;
+}
+
+export interface FlavorTextEntry {
+  flavor_text?: string;
+  language?: Color;
+  version?: Color;
+}
+
+export interface Genus {
+  genus?: string;
+  language?: Color;
+}
+
 export interface Name {
-  language?: Generation;
+  language?: Color;
   name?: string;
 }
 
 export interface PalParkEncounter {
-  area?: Generation;
+  area?: Color;
   base_score?: number;
   rate?: number;
 }
 
 export interface PokedexNumber {
   entry_number?: number;
-  pokedex?: Generation;
+  pokedex?: Color;
 }
 
 export interface Variety {
   is_default?: boolean;
-  pokemon?: Generation;
+  pokemon?: Color;
+}
+
+export interface EvolutionChain {
+  baby_trigger_item?: null;
+  chain?: Chain;
+  id?: number;
+}
+
+export interface Chain {
+  evolution_details?: EvolutionDetail[];
+  evolves_to?: Chain[];
+  is_baby?: boolean;
+  species?: Species;
+}
+
+export interface EvolutionDetail {
+  gender?: null;
+  held_item?: null;
+  item?: null;
+  known_move?: null;
+  known_move_type?: null;
+  location?: null;
+  min_affection?: null;
+  min_beauty?: null;
+  min_happiness?: null;
+  min_level?: number;
+  needs_overworld_rain?: boolean;
+  party_species?: null;
+  party_type?: null;
+  relative_physical_stats?: null;
+  time_of_day?: string;
+  trade_species?: null;
+  trigger?: Species;
+  turn_upside_down?: boolean;
 }

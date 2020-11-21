@@ -18,6 +18,7 @@ import NextImage from "next/image";
 import React, { Fragment } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useQuery } from "react-query";
+import EvolutionTab from "../../components/EvolutionTab";
 import { Main } from "../../components/Main";
 import PokeballLoader from "../../components/PokeballLoader";
 import PokemonTypeBadge from "../../components/PokemonTypeBadge";
@@ -37,9 +38,13 @@ const Pokemon = () => {
     fetchSinglePokemon
   );
 
-  const { isLoading: isLoadingPokeSpecies, data: pokeSpecies } = useQuery<
-    PokemonSpecies
-  >(["pokemonSpecies", router.query.id], fetchSinglePokemonSpecies);
+  const {
+    isLoading: isLoadingPokeSpecies,
+    data: pokeSpecies,
+  } = useQuery<PokemonSpecies>(
+    ["pokemonSpecies", router.query.id],
+    fetchSinglePokemonSpecies
+  );
 
   if (isLoading || isLoadingPokeSpecies) {
     return <PokeballLoader />;
@@ -50,7 +55,7 @@ const Pokemon = () => {
       <Main>
         <Box as={FaArrowLeft} cursor="pointer" onClick={() => history.back()} />
         <Grid
-          gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
+          gridTemplateColumns={["1fr", "1fr", "1fr "]}
           gap={["10px", "10px", "40px"]}
           boxShadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
         >
@@ -59,7 +64,7 @@ const Pokemon = () => {
             gridTemplateRows="repeat(auto-fill, minmax(150px, 1fr))"
             bg={`${data.types[0].type.name}.light`}
             p={["20px", "30px", "30px"]}
-            h={["auto", "auto", "80vh"]}
+            // h={["auto", "auto", "80vh"]}
           >
             <Box>
               <Text fontWeight="semibold" fontSize="xl" color="gray.700">
@@ -94,12 +99,7 @@ const Pokemon = () => {
           </Grid>
           <Box fontSize="xl" p={["0px", "0px", "30px"]}>
             <Tabs variant="soft">
-              <TabList
-                color="gray.400"
-                justifyContent="space-between"
-                px={5}
-                // mb={2}
-              >
+              <TabList color="gray.400" justifyContent="space-between" px={5}>
                 <Tab _selected={{ color: "gray.900" }}> About</Tab>
                 <Tab _selected={{ color: "gray.900" }}>Stats</Tab>
                 <Tab _selected={{ color: "gray.900" }}>Evolution</Tab>
@@ -180,7 +180,11 @@ const Pokemon = () => {
                   </Grid>
                 </TabPanel>
                 <TabPanel>
-                  <p>three!</p>
+                  <EvolutionTab
+                    id={String(
+                      pokeSpecies.evolution_chain.url.split("/").slice(-2)[0]
+                    )}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
