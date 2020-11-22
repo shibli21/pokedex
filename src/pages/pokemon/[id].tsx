@@ -4,8 +4,6 @@ import {
   Container,
   Flex,
   Grid,
-  ListItem,
-  OrderedList,
   Tab,
   TabList,
   TabPanel,
@@ -18,37 +16,50 @@ import NextImage from "next/image";
 import React, { Fragment } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useQuery } from "react-query";
+import AboutTab from "../../components/AboutTab";
 import EvolutionTab from "../../components/EvolutionTab";
 import { Main } from "../../components/Main";
 import PokeballLoader from "../../components/PokeballLoader";
 import PokemonTypeBadge from "../../components/PokemonTypeBadge";
-import ProgressBar from "../../components/ProgressBar";
-import BoldText from "../../components/TextStyle/BoldText";
-import SecondaryText from "../../components/TextStyle/SecondaryText";
-import TitleText from "../../components/TextStyle/TitleText";
+import StatsTab from "../../components/StatsTab";
 import { PokemonSpecies, SinglePokemon } from "../../types/global";
+import { getIdFromUrl } from "../../utils/getIdFromUrl";
 import { fetchSinglePokemon, fetchSinglePokemonSpecies } from "../api/apiCalls";
 import { BaseImageUrl } from "../api/axios";
 
 const Pokemon = () => {
   const router = useRouter();
 
-  const { isLoading, data } = useQuery<SinglePokemon>(
+  const { isLoading, data, error } = useQuery<SinglePokemon>(
     ["pokemon", router.query.id],
-    fetchSinglePokemon
+    fetchSinglePokemon,
+    {
+      refetchOnWindowFocus: false,
+    }
   );
+  console.log("Pokemon -> status", error);
 
   const {
+    error: errorPokeSpecies,
     isLoading: isLoadingPokeSpecies,
     data: pokeSpecies,
   } = useQuery<PokemonSpecies>(
     ["pokemonSpecies", router.query.id],
-    fetchSinglePokemonSpecies
+    fetchSinglePokemonSpecies,
+    {
+      refetchOnWindowFocus: false,
+    }
   );
 
   if (isLoading || isLoadingPokeSpecies) {
     return <PokeballLoader />;
   }
+
+  if (error || errorPokeSpecies) {
+    return <Box>{error.message || errorPokeSpecies.message}</Box>;
+  }
+
+  const bg = `${data.types[0]?.type?.name}.light` || "red.500";
 
   return (
     <Container maxW="xl">
@@ -62,7 +73,7 @@ const Pokemon = () => {
           <Grid
             gridTemplateColumns={["1fr 1fr", "1fr 1fr", "1fr "]}
             gridTemplateRows="repeat(auto-fill, minmax(150px, 1fr))"
-            bg={`${data.types[0].type.name}.light`}
+            bg={bg}
             p={["20px", "30px", "30px"]}
             // h={["auto", "auto", "80vh"]}
           >
@@ -80,11 +91,12 @@ const Pokemon = () => {
                 {data.name}
               </Text>
               <Flex>
-                {data.types.map((type) => (
-                  <Fragment key={type.type.name}>
-                    <PokemonTypeBadge type={type.type.name} />
-                  </Fragment>
-                ))}
+                {data.types.length > 0 &&
+                  data.types.map((type) => (
+                    <Fragment key={type.type.name}>
+                      <PokemonTypeBadge type={type.type.name} />
+                    </Fragment>
+                  ))}
               </Flex>
             </Box>
             <Box>
@@ -106,85 +118,17 @@ const Pokemon = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <Text
-                    textTransform="capitalize"
-                    fontSize={["md", "md", "lg"]}
-                    mb={4}
-                  >
-                    {pokeSpecies.flavor_text_entries[0].flavor_text.replace(
-                      "\f",
-                      " "
-                    )}
-                  </Text>
-                  <TitleText color={`${data.types[0].type.name}.medium`}>
-                    Pokedex Data
-                  </TitleText>
-                  <Grid gridTemplateColumns="1fr 1fr">
-                    <BoldText>Species</BoldText>
-                    <SecondaryText>{pokeSpecies.genera[7].genus}</SecondaryText>
-                    <BoldText>Height</BoldText>
-                    <SecondaryText>{data.height}</SecondaryText>
-                    <BoldText>Weight</BoldText>
-                    <SecondaryText>{data.weight}</SecondaryText>
-                    <BoldText>Abilities</BoldText>
-                    <OrderedList>
-                      {data.abilities.map((ab) => (
-                        <SecondaryText key={ab.ability.name}>
-                          <ListItem>{ab.ability.name}</ListItem>
-                        </SecondaryText>
-                      ))}
-                    </OrderedList>
-                  </Grid>
-                  <TitleText color={`${data.types[0].type.name}.medium`}>
-                    Training
-                  </TitleText>
-                  <Grid gridTemplateColumns="1fr 1fr">
-                    <BoldText>Catch Rate</BoldText>
-                    <SecondaryText>{pokeSpecies.capture_rate}</SecondaryText>
-                    <BoldText>Base Friendship</BoldText>
-                    <SecondaryText>{pokeSpecies.base_happiness}</SecondaryText>
-                    <BoldText>Base Exp</BoldText>
-                    <SecondaryText>{data.base_experience}</SecondaryText>
-                    <BoldText>Growth Rate</BoldText>
-                    <SecondaryText>
-                      {pokeSpecies.growth_rate.name}
-                    </SecondaryText>
-                  </Grid>
+                  <AboutTab />
                 </TabPanel>
                 <TabPanel>
-                  <TitleText color={`${data.types[0].type.name}.medium`}>
-                    Base Stats
-                  </TitleText>
-                  <Grid
-                    alignItems="center"
-                    gridTemplateColumns="3fr 1fr 2fr  1fr 1fr"
-                    columnGap="15px"
-                  >
-                    {data.stats.map((stat) => (
-                      <Fragment key={stat.stat.name}>
-                        <BoldText>{stat.stat.name}</BoldText>
-                        <Text color="gray.500">{stat.base_stat}</Text>
-                        <ProgressBar
-                          bg={`${data.types[0].type.name}.medium`}
-                          value={stat.base_stat}
-                          max={300}
-                        />
-                        <Text color="gray.500" justifySelf="flex-end">
-                          {stat.base_stat}
-                        </Text>
-                        <Text color="gray.500" justifySelf="flex-end">
-                          {stat.base_stat}
-                        </Text>
-                      </Fragment>
-                    ))}
-                  </Grid>
+                  <StatsTab />
                 </TabPanel>
                 <TabPanel>
-                  <EvolutionTab
-                    id={String(
-                      pokeSpecies.evolution_chain.url.split("/").slice(-2)[0]
-                    )}
-                  />
+                  {pokeSpecies.evolution_chain && (
+                    <EvolutionTab
+                      id={getIdFromUrl(pokeSpecies.evolution_chain.url)}
+                    />
+                  )}
                 </TabPanel>
               </TabPanels>
             </Tabs>

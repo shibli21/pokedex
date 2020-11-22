@@ -1,12 +1,14 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import Image from "next/image";
+import Link from "next/link";
 import React, { Fragment } from "react";
 import { CgArrowLongRight } from "react-icons/cg";
 import { queryCache, useQuery } from "react-query";
 import { fetchPokemonEvolutionChain } from "../pages/api/apiCalls";
 import { BaseImageUrl } from "../pages/api/axios";
 import { EvolutionChain, SinglePokemon } from "../types/global";
+import { getIdFromUrl } from "../utils/getIdFromUrl";
 
 interface Props {
   id: string;
@@ -27,6 +29,7 @@ const EvolutionTab = ({ id }: Props) => {
   if (isLoading) {
     return <h1>Loading</h1>;
   }
+  const color = `${SpData.types[0].type.name}.medium`;
 
   return (
     <Box>
@@ -37,45 +40,47 @@ const EvolutionTab = ({ id }: Props) => {
             align="center"
             justify="space-around"
             border="1px solid"
-            borderColor={`${SpData.types[0].type.name}.medium`}
+            borderColor={color}
             mb={4}
           >
-            <Box>
-              <Image
-                width="150px"
-                height="150px"
-                src={`${BaseImageUrl}/${
-                  data.chain.species.url.split("/").slice(-2)[0]
-                }.png`}
-              />
+            <Box cursor="pointer">
+              <Link href={`/pokemon/${getIdFromUrl(data.chain.species.url)}`}>
+                <Image
+                  width="150px"
+                  height="150px"
+                  src={`${BaseImageUrl}/${getIdFromUrl(
+                    data.chain.species.url
+                  )}.png`}
+                />
+              </Link>
             </Box>
-            <Box p={1} color={`${SpData.types[0].type.name}.medium`}>
+            <Box p={1} color={color}>
               <CgArrowLongRight size="30px" />
             </Box>
-            <Box>
-              <Image
-                width="150px"
-                height="150px"
-                src={`${BaseImageUrl}/${
-                  b.species.url.split("/").slice(-2)[0]
-                }.png`}
-              />
+            <Box cursor="pointer">
+              <Link href={`/pokemon/${getIdFromUrl(b.species.url)}`}>
+                <Image
+                  width="150px"
+                  height="150px"
+                  src={`${BaseImageUrl}/${getIdFromUrl(b.species.url)}.png`}
+                />
+              </Link>
             </Box>
             {b.evolves_to.length >= 1 && (
-              <Box p={1} color={`${SpData.types[0].type.name}.medium`}>
+              <Box p={1} color={color}>
                 <CgArrowLongRight size="30px" />
               </Box>
             )}
             {b.evolves_to.length >= 1 && (
-              <Box>
+              <Box cursor="pointer">
                 {b.evolves_to.map((c) => (
-                  <Image
-                    width="150px"
-                    height="150px"
-                    src={`${BaseImageUrl}/${
-                      c.species.url.split("/").slice(-2)[0]
-                    }.png`}
-                  />
+                  <Link href={`/pokemon/${getIdFromUrl(c.species.url)}`}>
+                    <Image
+                      width="150px"
+                      height="150px"
+                      src={`${BaseImageUrl}/${getIdFromUrl(c.species.url)}.png`}
+                    />
+                  </Link>
                 ))}
               </Box>
             )}
