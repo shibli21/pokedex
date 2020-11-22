@@ -344,3 +344,39 @@ export interface EvolutionDetail {
   trigger?: Species;
   turn_upside_down?: boolean;
 }
+
+export interface PokemonType {
+  damage_relations?: DamageRelations;
+  game_indices?: GameIndex[];
+  generation?: Generation;
+  id?: number;
+  move_damage_class?: Generation;
+  moves?: Generation[];
+  name?: string;
+  names?: Name[];
+  pokemon?: Pokemon[];
+}
+
+export interface DamageRelations {
+  double_damage_from?: Generation[];
+  double_damage_to?: any[];
+  half_damage_from?: any[];
+  half_damage_to?: any[];
+  no_damage_from?: any[];
+  no_damage_to?: any[];
+}
+
+export interface Generation {
+  name?: string;
+  url?: string;
+}
+
+export interface Name {
+  language?: Generation;
+  name?: string;
+}
+
+export interface Pokemon {
+  pokemon?: Generation;
+  slot?: number;
+}

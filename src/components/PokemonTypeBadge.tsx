@@ -114,7 +114,7 @@ const PokemonTypeBadge = ({ type, noName }: Props) => {
       boxShadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
     >
       <HStack spacing={1}>
-        <Box p={noName ? 1.5 : ""}>{icon}</Box>
+        <Box>{icon}</Box>
         {noName ? null : (
           <Text mr={1} fontSize={["xs", "sm", "lg"]}>
             {type}

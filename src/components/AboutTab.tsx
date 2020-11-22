@@ -1,8 +1,12 @@
 import { Box, Grid, ListItem, OrderedList, Text } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
+import numeral from "numeral";
 import React from "react";
-import { queryCache } from "react-query";
-import { PokemonSpecies, SinglePokemon } from "../types/global";
+import { queryCache, useQuery } from "react-query";
+import { fetchSinglePokemonType } from "../pages/api/apiCalls";
+import { PokemonSpecies, PokemonType, SinglePokemon } from "../types/global";
+import { getIdFromUrl } from "../utils/getIdFromUrl";
+import PokemonTypeBadge from "./PokemonTypeBadge";
 import BoldText from "./TextStyle/BoldText";
 import SecondaryText from "./TextStyle/SecondaryText";
 import TitleText from "./TextStyle/TitleText";
@@ -20,6 +24,14 @@ const AboutTab = (props: Props) => {
     "pokemonSpecies",
     router.query.id,
   ]);
+
+  const { isLoading, data: pokemonType } = useQuery<PokemonType>(
+    ["pokemonType", getIdFromUrl(data.types[0].type.url)],
+    fetchSinglePokemonType,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const color = `${data.types[0].type.name}.medium`;
 
@@ -43,9 +55,15 @@ const AboutTab = (props: Props) => {
             : "----"}
         </SecondaryText>
         <BoldText>Height</BoldText>
-        <SecondaryText>{data.height}</SecondaryText>
+        <SecondaryText>
+          {numeral(data.height * 0.1).format("0.0[0]")}m (
+          {numeral(data.height * 0.328084).format("0.0[0]")}
+          ft)
+        </SecondaryText>
         <BoldText>Weight</BoldText>
-        <SecondaryText>{data.weight}</SecondaryText>
+        <SecondaryText>
+          {numeral(data.weight * 0.1).format("0.0[00]")}kg
+        </SecondaryText>
         <BoldText>Abilities</BoldText>
         {data.abilities.length > 0 ? (
           <OrderedList>
@@ -60,6 +78,13 @@ const AboutTab = (props: Props) => {
         ) : (
           <SecondaryText>----</SecondaryText>
         )}
+        <BoldText>Weakness</BoldText>
+        <Box>
+          {!isLoading &&
+            pokemonType.damage_relations.double_damage_from.map((d) => (
+              <PokemonTypeBadge noName type={d.name} />
+            ))}
+        </Box>
       </Grid>
       <TitleText color={color}>Training</TitleText>
       <Grid gridTemplateColumns="1fr 1fr">

@@ -9,6 +9,10 @@ export const fetchSinglePokemonSpecies = async (key, id: any) => {
   return createApiRequest(`/pokemon-species/${id}`, HTTP_METHODS.GET, {});
 };
 
+export const fetchSinglePokemonType = async (key, id: any) => {
+  return createApiRequest(`/type/${id}`, HTTP_METHODS.GET, {});
+};
+
 export const fetchPokemon = async (key, offset = 0) => {
   return createApiRequest(
     `/pokemon?offset=${offset}&limit=6`,

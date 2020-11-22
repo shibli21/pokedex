@@ -15,7 +15,7 @@ import { fetchSinglePokemon } from "../pages/api/apiCalls";
 import { PokemonResult, SinglePokemon } from "../types/global";
 import PokemonTypeBadge from "./PokemonTypeBadge";
 import { BaseImageUrl } from "../pages/api/axios";
-
+import numeral from "numeral";
 interface PokemonCard {
   data: PokemonResult;
 }
@@ -55,7 +55,7 @@ const PokemonCard = ({ data }: PokemonCard) => {
         <Grid gridTemplateColumns="1fr 1fr">
           <Box>
             <Text fontWeight="semibold" fontSize="xl" color="gray.700">
-              #00{pokemonId}
+              #{numeral(pokemonId).format("000")}
             </Text>
             <Text
               textTransform="capitalize"

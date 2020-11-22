@@ -26,6 +26,7 @@ import { PokemonSpecies, SinglePokemon } from "../../types/global";
 import { getIdFromUrl } from "../../utils/getIdFromUrl";
 import { fetchSinglePokemon, fetchSinglePokemonSpecies } from "../api/apiCalls";
 import { BaseImageUrl } from "../api/axios";
+import numeral from "numeral";
 
 const Pokemon = () => {
   const router = useRouter();
@@ -37,7 +38,6 @@ const Pokemon = () => {
       refetchOnWindowFocus: false,
     }
   );
-  console.log("Pokemon -> status", error);
 
   const {
     error: errorPokeSpecies,
@@ -79,7 +79,7 @@ const Pokemon = () => {
           >
             <Box>
               <Text fontWeight="semibold" fontSize="xl" color="gray.700">
-                #00{router.query.id}
+                #{numeral(router.query.id).format("000")}
               </Text>
               <Text
                 textTransform="capitalize"
