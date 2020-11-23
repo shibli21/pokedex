@@ -10,21 +10,12 @@ import { useInfiniteQuery } from "react-query";
 import { Main } from "../components/Main";
 import PokeballLoader from "../components/PokeballLoader";
 import PokemonCard from "../components/PokemonCard";
+import useInfinitePokemons from "../hooks/useInfinitePokemons";
 import { Pokemons } from "../types/global";
 import { fetchPokemon } from "./api/apiCalls";
 
 export default function Home() {
-  const {
-    data,
-    isFetchingMore,
-    fetchMore,
-    isLoading,
-  } = useInfiniteQuery<Pokemons>("pokemons", fetchPokemon, {
-    getFetchMore: (lastGroup) => {
-      lastGroup.cursor = lastGroup.next?.split("&")[0].split("=")[1];
-      return lastGroup.cursor;
-    },
-  });
+  const { data, isFetchingMore, fetchMore, isLoading } = useInfinitePokemons();
 
   if (isLoading) return <PokeballLoader />;
 

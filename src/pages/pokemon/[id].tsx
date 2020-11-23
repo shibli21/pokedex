@@ -16,50 +16,32 @@ import NextImage from "next/image";
 import numeral from "numeral";
 import React, { Fragment } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useQuery } from "react-query";
 import AboutTab from "../../components/AboutTab";
 import EvolutionTab from "../../components/EvolutionTab";
 import { Main } from "../../components/Main";
 import PokeballLoader from "../../components/PokeballLoader";
 import PokemonTypeBadge from "../../components/PokemonTypeBadge";
 import StatsTab from "../../components/StatsTab";
-import { PokemonSpecies, SinglePokemon } from "../../types/global";
+import usePokemon from "../../hooks/usePokemon";
+import usePokemonSpecies from "../../hooks/usePokemonSpecies";
 import { getIdFromUrl } from "../../utils/getIdFromUrl";
-import { fetchSinglePokemon, fetchSinglePokemonSpecies } from "../api/apiCalls";
 import { BaseImageUrl } from "../api/axios";
 
 const Pokemon = () => {
   const router = useRouter();
 
-  const { isLoading, data, error } = useQuery<SinglePokemon, Error>(
-    ["pokemon", router.query.id],
-    fetchSinglePokemon,
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+  const pokemon = usePokemon(router.query.id);
+  const pokemonSpecies = usePokemonSpecies(router.query.id);
 
-  const {
-    error: errorPokeSpecies,
-    isLoading: isLoadingPokeSpecies,
-    data: pokeSpecies,
-  } = useQuery<PokemonSpecies, Error>(
-    ["pokemonSpecies", router.query.id],
-    fetchSinglePokemonSpecies,
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  if (isLoading || isLoadingPokeSpecies) {
+  if (pokemon.isLoading || pokemonSpecies.isLoading) {
     return <PokeballLoader />;
   }
 
-  if (error || errorPokeSpecies) {
-    return <Box>{error.message || errorPokeSpecies.message}</Box>;
+  if (pokemon.error || pokemonSpecies.error) {
+    return <Box>{pokemon.error.message || pokemonSpecies.error.message}</Box>;
   }
 
-  const bg = `${data.types[0]?.type?.name}.light` || "red.500";
+  const bg = `${pokemon.data.types[0]?.type?.name}.light` || "red.500";
 
   return (
     <Container maxW="xl">
@@ -88,11 +70,11 @@ const Pokemon = () => {
                 letterSpacing={1.3}
                 fontSize={["2xl", "3xl", "3xl", "3xl"]}
               >
-                {data.name}
+                {pokemon.data.name}
               </Text>
               <Flex>
-                {data.types.length > 0 &&
-                  data.types.map((type) => (
+                {pokemon.data.types.length > 0 &&
+                  pokemon.data.types.map((type) => (
                     <Fragment key={type.type.name}>
                       <PokemonTypeBadge type={type.type.name} />
                     </Fragment>
@@ -124,9 +106,9 @@ const Pokemon = () => {
                   <StatsTab />
                 </TabPanel>
                 <TabPanel>
-                  {pokeSpecies.evolution_chain && (
+                  {pokemonSpecies.data.evolution_chain && (
                     <EvolutionTab
-                      id={getIdFromUrl(pokeSpecies.evolution_chain.url)}
+                      id={getIdFromUrl(pokemonSpecies.data.evolution_chain.url)}
                     />
                   )}
                 </TabPanel>

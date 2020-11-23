@@ -4,10 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import { CgArrowLongRight } from "react-icons/cg";
-import { queryCache, useQuery } from "react-query";
-import { fetchPokemonEvolutionChain } from "../pages/api/apiCalls";
+import usePokemonEvolutionChain from "../hooks/useEvolutionChain";
+import usePokemon from "../hooks/usePokemon";
 import { BaseImageUrl } from "../pages/api/axios";
-import { EvolutionChain, SinglePokemon } from "../types/global";
 import { getIdFromUrl } from "../utils/getIdFromUrl";
 
 interface Props {
@@ -16,25 +15,21 @@ interface Props {
 
 const EvolutionTab = ({ id }: Props) => {
   const router = useRouter();
-  const SpData = queryCache.getQueryData<SinglePokemon>([
-    "pokemon",
-    router.query.id,
-  ]);
 
-  const { isLoading, data } = useQuery<EvolutionChain>(
-    ["evolutionChain", id],
-    fetchPokemonEvolutionChain
-  );
+  const pokemon = usePokemon(router.query.id);
 
-  if (isLoading) {
+  const evolutionChain = usePokemonEvolutionChain(id);
+
+  if (evolutionChain.isLoading || pokemon.isLoading) {
     return <h1>Loading</h1>;
   }
-  const color = `${SpData.types[0].type.name}.medium`;
+
+  const color = `${pokemon.data.types[0].type.name}.medium`;
 
   return (
     <Box>
-      {data.chain.evolves_to.map((b) => (
-        <Fragment>
+      {evolutionChain.data.chain.evolves_to.map((b) => (
+        <Fragment key={b.species.name}>
           <Flex
             p={4}
             align="center"
@@ -44,14 +39,20 @@ const EvolutionTab = ({ id }: Props) => {
             mb={4}
           >
             <Box cursor="pointer">
-              <Link href={`/pokemon/${getIdFromUrl(data.chain.species.url)}`}>
-                <Image
-                  width="150px"
-                  height="150px"
-                  src={`${BaseImageUrl}/${getIdFromUrl(
-                    data.chain.species.url
-                  )}.png`}
-                />
+              <Link
+                href={`/pokemon/${getIdFromUrl(
+                  evolutionChain.data.chain.species.url
+                )}`}
+              >
+                <Box>
+                  <Image
+                    width="150px"
+                    height="150px"
+                    src={`${BaseImageUrl}/${getIdFromUrl(
+                      evolutionChain.data.chain.species.url
+                    )}.png`}
+                  />
+                </Box>
               </Link>
             </Box>
             <Box p={1} color={color}>
@@ -59,11 +60,13 @@ const EvolutionTab = ({ id }: Props) => {
             </Box>
             <Box cursor="pointer">
               <Link href={`/pokemon/${getIdFromUrl(b.species.url)}`}>
-                <Image
-                  width="150px"
-                  height="150px"
-                  src={`${BaseImageUrl}/${getIdFromUrl(b.species.url)}.png`}
-                />
+                <Box>
+                  <Image
+                    width="150px"
+                    height="150px"
+                    src={`${BaseImageUrl}/${getIdFromUrl(b.species.url)}.png`}
+                  />
+                </Box>
               </Link>
             </Box>
             {b.evolves_to.length >= 1 && (
@@ -74,12 +77,20 @@ const EvolutionTab = ({ id }: Props) => {
             {b.evolves_to.length >= 1 && (
               <Box cursor="pointer">
                 {b.evolves_to.map((c) => (
-                  <Link href={`/pokemon/${getIdFromUrl(c.species.url)}`}>
-                    <Image
-                      width="150px"
-                      height="150px"
-                      src={`${BaseImageUrl}/${getIdFromUrl(c.species.url)}.png`}
-                    />
+                  <Link
+                    key={c.species.name}
+                    href={`/pokemon/${getIdFromUrl(c.species.url)}`}
+                  >
+                    <Box>
+                      <Image
+                        key={c.species.name}
+                        width="150px"
+                        height="150px"
+                        src={`${BaseImageUrl}/${getIdFromUrl(
+                          c.species.url
+                        )}.png`}
+                      />
+                    </Box>
                   </Link>
                 ))}
               </Box>
