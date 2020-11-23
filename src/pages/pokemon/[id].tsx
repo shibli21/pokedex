@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import NextImage from "next/image";
+import numeral from "numeral";
 import React, { Fragment } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useQuery } from "react-query";
@@ -26,12 +27,11 @@ import { PokemonSpecies, SinglePokemon } from "../../types/global";
 import { getIdFromUrl } from "../../utils/getIdFromUrl";
 import { fetchSinglePokemon, fetchSinglePokemonSpecies } from "../api/apiCalls";
 import { BaseImageUrl } from "../api/axios";
-import numeral from "numeral";
 
 const Pokemon = () => {
   const router = useRouter();
 
-  const { isLoading, data, error } = useQuery<SinglePokemon>(
+  const { isLoading, data, error } = useQuery<SinglePokemon, Error>(
     ["pokemon", router.query.id],
     fetchSinglePokemon,
     {
@@ -43,7 +43,7 @@ const Pokemon = () => {
     error: errorPokeSpecies,
     isLoading: isLoadingPokeSpecies,
     data: pokeSpecies,
-  } = useQuery<PokemonSpecies>(
+  } = useQuery<PokemonSpecies, Error>(
     ["pokemonSpecies", router.query.id],
     fetchSinglePokemonSpecies,
     {
