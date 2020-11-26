@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { fetchSinglePokemonType } from "../pages/api/apiCalls";
+import { fetchSinglePokemonType } from "../api/apiCalls";
 import { PokemonType } from "../types/global";
 
 export default function usePokemonType(pokemonId) {

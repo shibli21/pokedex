@@ -1,4 +1,4 @@
-import { HTTP_METHODS } from "../../types/global";
+import { HTTP_METHODS } from "../types/global";
 import { createApiRequest } from "./axios";
 
 export const fetchSinglePokemon = async (key, id: any) => {

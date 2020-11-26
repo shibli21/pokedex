@@ -11,10 +11,10 @@ import NextLink from "next/link";
 import NextImage from "next/image";
 import React, { Fragment } from "react";
 import { useQuery } from "react-query";
-import { fetchSinglePokemon } from "../pages/api/apiCalls";
+import { fetchSinglePokemon } from "../api/apiCalls";
 import { PokemonResult, SinglePokemon } from "../types/global";
 import PokemonTypeBadge from "./PokemonTypeBadge";
-import { BaseImageUrl } from "../pages/api/axios";
+import { BaseImageUrl } from "../api/axios";
 import numeral from "numeral";
 interface PokemonCard {
   data: PokemonResult;
@@ -27,6 +27,8 @@ const PokemonCard = ({ data }: PokemonCard) => {
     ["pokemon", pokemonId],
     fetchSinglePokemon
   );
+
+  const url = `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.08' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`;
 
   if (isLoading) {
     return (
@@ -45,6 +47,7 @@ const PokemonCard = ({ data }: PokemonCard) => {
       <Box
         p="5"
         bg={`${PokeData?.types[0].type.name}.light`}
+        backgroundImage={url}
         boxShadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
         cursor="pointer"
         _hover={{

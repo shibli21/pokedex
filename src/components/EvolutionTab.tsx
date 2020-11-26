@@ -6,7 +6,7 @@ import React, { Fragment } from "react";
 import { CgArrowLongRight } from "react-icons/cg";
 import usePokemonEvolutionChain from "../hooks/useEvolutionChain";
 import usePokemon from "../hooks/usePokemon";
-import { BaseImageUrl } from "../pages/api/axios";
+import { BaseImageUrl } from "../api/axios";
 import { getIdFromUrl } from "../utils/getIdFromUrl";
 
 interface Props {

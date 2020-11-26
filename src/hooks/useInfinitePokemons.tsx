@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "react-query";
-import { fetchPokemon } from "../pages/api/apiCalls";
+import { fetchPokemon } from "../api/apiCalls";
 import { Pokemons } from "../types/global";
 
 export default function useInfinitePokemons() {

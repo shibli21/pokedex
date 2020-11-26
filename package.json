@@ -20,7 +20,8 @@
     "react-dom": "17.0.1",
     "react-icons": "^3.11.0",
     "react-query": "^2.26.2",
-    "react-query-devtools": "^2.6.3"
+    "react-query-devtools": "^2.6.3",
+    "react-waypoint": "^9.0.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.7",
