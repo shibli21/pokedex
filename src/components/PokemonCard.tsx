@@ -1,21 +1,13 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  Image,
-  Skeleton,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Flex, Grid, Skeleton, Stack, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
+import NextLink from "next/link";
+import numeral from "numeral";
 import React, { Fragment } from "react";
 import { useQuery } from "react-query";
 import { fetchSinglePokemon } from "../api/apiCalls";
+import { BaseImageUrl } from "../api/axios";
 import { PokemonResult, SinglePokemon } from "../types/global";
 import PokemonTypeBadge from "./PokemonTypeBadge";
-import { BaseImageUrl } from "../api/axios";
-import numeral from "numeral";
 interface PokemonCard {
   data: PokemonResult;
 }
@@ -51,7 +43,9 @@ const PokemonCard = ({ data }: PokemonCard) => {
         boxShadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
         cursor="pointer"
         _hover={{
-          transform: "scale(1.05)",
+          background: `${PokeData?.types[0].type.name}.medium`,
+          backgroundImage: url,
+          transform: "scale(1.03)",
           transition: "all .4s  ease-out",
         }}
       >

@@ -1,35 +1,34 @@
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Heading,
-  SimpleGrid,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, Center, Container, SimpleGrid, Spinner } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { Fragment } from "react";
 import { Waypoint } from "react-waypoint";
+import Hero from "../components/Hero";
 import { Main } from "../components/Main";
 import PokeballLoader from "../components/PokeballLoader";
 import PokemonCard from "../components/PokemonCard";
 import useInfinitePokemons from "../hooks/useInfinitePokemons";
 
 export default function Home() {
-  const { data, isFetchingMore, fetchMore, isLoading } = useInfinitePokemons();
+  const {
+    data,
+    isFetchingMore,
+    fetchMore,
+    isLoading,
+    error,
+  } = useInfinitePokemons();
 
   if (isLoading) return <PokeballLoader />;
+
+  if (error) return <Box>{error}</Box>;
 
   return (
     <>
       <Head>
         <title>Pokédex</title>
       </Head>
-      <Container maxW="xl">
+      <Hero />
+      <Container maxW="7xl">
         <Main>
-          <Heading textAlign="center" mb={8}>
-            Pokédex
-          </Heading>
           <SimpleGrid
             columns={[1, 1, 1, 2]}
             spacingX="40px"

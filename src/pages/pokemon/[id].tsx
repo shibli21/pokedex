@@ -12,10 +12,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
+import Head from "next/head";
 import NextImage from "next/image";
 import numeral from "numeral";
 import React, { Fragment } from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import { BaseImageUrl } from "../../api/axios";
 import AboutTab from "../../components/AboutTab";
 import EvolutionTab from "../../components/EvolutionTab";
 import { Main } from "../../components/Main";
@@ -25,8 +27,6 @@ import StatsTab from "../../components/StatsTab";
 import usePokemon from "../../hooks/usePokemon";
 import usePokemonSpecies from "../../hooks/usePokemonSpecies";
 import { getIdFromUrl } from "../../utils/getIdFromUrl";
-import { BaseImageUrl } from "../../api/axios";
-import Head from "next/head";
 
 const Pokemon = () => {
   const router = useRouter();
@@ -51,7 +51,7 @@ const Pokemon = () => {
       <Head>
         <title>Pokédex | {pokemon.data.name}</title>
       </Head>
-      <Container maxW="xl">
+      <Container maxW="7xl">
         <Main>
           <Box
             as={FaArrowLeft}

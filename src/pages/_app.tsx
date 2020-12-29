@@ -2,6 +2,7 @@ import { Box, ChakraProvider } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query-devtools";
+import "../styles/global.css";
 import theme from "../theme/theme";
 
 export const queryCache = new QueryCache();
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps, router }) {
             key={router.pathname}
           >
             <ReactQueryDevtools />
+
             <Component {...pageProps} />
           </MotionBox>
         </ChakraProvider>

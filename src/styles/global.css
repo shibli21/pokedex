@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "pokemon";
+  src: url("/fonts/PokemonSolid.ttf");
+}
+
+body {
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  position: relative;
+  width: 7px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(216, 216, 216);
+}
