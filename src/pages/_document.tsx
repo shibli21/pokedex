@@ -1,11 +1,5 @@
 import { ColorModeScript } from "@chakra-ui/react";
-import Document, {
-  DocumentContext,
-  Head,
-  Html,
-  Main,
-  NextScript,
-} from "next/document";
+import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document";
 import React from "react";
 
 class MyDocument extends Document {
@@ -19,17 +13,13 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link
-            rel="preload"
-            href="public/fonts/PokemonSolid.ttf"
-            as="font"
-            crossOrigin=""
-          />
+          <link rel="preload" href="public/fonts/PokemonSolid.ttf" as="font" crossOrigin="" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap"
             rel="stylesheet"
           />
+          <link rel="icon" href="/pokeball.png" type="image/x-icon" />
         </Head>
         <body>
           <Main />

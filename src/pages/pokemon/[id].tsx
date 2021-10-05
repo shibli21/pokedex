@@ -10,6 +10,7 @@ import {
   TabPanels,
   Tabs,
   Text,
+  HStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
@@ -51,20 +52,21 @@ const Pokemon = () => {
       <Head>
         <title>Pokédex | {pokemon.data.name}</title>
       </Head>
-      <Container maxW="7xl">
+      <Container maxW="5xl">
         <Main>
-          <Box
-            as={FaArrowLeft}
-            cursor="pointer"
-            onClick={() => history.back()}
-          />
+          <Box>
+            <HStack _hover={{ color: bg }} onClick={() => history.back()} cursor="pointer" display="inline-flex">
+              <Box as={FaArrowLeft} />
+              <Text>back</Text>
+            </HStack>
+          </Box>
           <Grid
             gridTemplateColumns={["1fr", "1fr", "1fr "]}
             gap={["10px", "10px", "40px"]}
             boxShadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
           >
             <Grid
-              gridTemplateColumns={["1fr 1fr", "1fr 1fr", "1fr "]}
+              gridTemplateColumns={["1fr 1fr", "1fr 1fr", "1fr 1fr"]}
               gridTemplateRows="repeat(auto-fill, minmax(150px, 1fr))"
               bg={bg}
               backgroundImage={url}
@@ -95,11 +97,7 @@ const Pokemon = () => {
               </Box>
               <Box>
                 <Center>
-                  <NextImage
-                    height="350px"
-                    width="350px"
-                    src={`${BaseImageUrl}/${router.query.id}.png`}
-                  />
+                  <NextImage height="350px" width="350px" src={`${BaseImageUrl}/${router.query.id}.png`} />
                 </Center>
               </Box>
             </Grid>
@@ -119,11 +117,7 @@ const Pokemon = () => {
                   </TabPanel>
                   <TabPanel>
                     {pokemonSpecies.data.evolution_chain && (
-                      <EvolutionTab
-                        id={getIdFromUrl(
-                          pokemonSpecies.data.evolution_chain.url
-                        )}
-                      />
+                      <EvolutionTab id={getIdFromUrl(pokemonSpecies.data.evolution_chain.url)} />
                     )}
                   </TabPanel>
                 </TabPanels>

@@ -9,13 +9,7 @@ import PokemonCard from "../components/PokemonCard";
 import useInfinitePokemons from "../hooks/useInfinitePokemons";
 
 export default function Home() {
-  const {
-    data,
-    isFetchingMore,
-    fetchMore,
-    isLoading,
-    error,
-  } = useInfinitePokemons();
+  const { data, isFetchingMore, fetchMore, isLoading, error } = useInfinitePokemons();
 
   if (isLoading) return <PokeballLoader />;
 
@@ -27,14 +21,9 @@ export default function Home() {
         <title>Pokédex</title>
       </Head>
       <Hero />
-      <Container maxW="7xl">
+      <Container maxW="5xl">
         <Main>
-          <SimpleGrid
-            columns={[1, 1, 1, 2]}
-            spacingX="40px"
-            spacingY="40px"
-            alignSelf="center"
-          >
+          <SimpleGrid columns={[1, 1, 1, 2]} spacingX="40px" spacingY="40px" alignSelf="center">
             {data.map((d, i) => (
               <Fragment key={i}>
                 {d.results.map((pokemon, i) => (

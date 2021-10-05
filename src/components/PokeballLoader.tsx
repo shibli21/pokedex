@@ -1,12 +1,11 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React from "react";
+import { MotionBox } from "./Motion";
 
 interface Props {}
 
 const PokeballLoader = (props: Props) => {
-  const MotionBox = motion.custom(Box);
-
   const bounceTransition = {
     y: {
       duration: 0.7,
@@ -79,12 +78,7 @@ const PokeballLoader = (props: Props) => {
           zIndex="100"
         />
 
-        <Box
-          bg="red.500"
-          h="45px"
-          w="80px"
-          borderRadius="1% 100% 70% 70% / 39% 0% 30% 30%"
-        ></Box>
+        <Box bg="red.500" h="45px" w="80px" borderRadius="1% 100% 70% 70% / 39% 0% 30% 30%"></Box>
         <Box bg="#ffffff" h="43px" w="80px"></Box>
       </MotionBox>
     </MotionBox>
