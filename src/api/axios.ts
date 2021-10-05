@@ -27,4 +27,5 @@ export const createApiRequest = async (
   }
 };
 
-export const BaseImageUrl = "https://pokeres.bastionbot.org/images/pokemon";
+
+export const BaseImageUrl = "https://cdn.traction.one/pokedex/pokemon";

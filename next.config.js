@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ["pokeres.bastionbot.org"],
+    domains: ["cdn.traction.one"],
   },
 };
